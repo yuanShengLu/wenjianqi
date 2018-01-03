@@ -1,0 +1,39 @@
+@charset "UTF-8";
+body {
+	background-image: url("http://localhost:8080/FinalProject/imgs/loginBackgroundImg.jpg");
+	background-size: 100%;
+}
+.login{
+	position:absolute;
+	left:50%;
+	top:50%;
+	width:300px;
+	height:100px;
+	margin-left:-150px;
+	margin-top: -200px;
+	text-align: center;
+}
+input{
+	box-sizing: border-box;
+  text-align:center;
+  font-size:1.4em;
+  height:1.3em;
+  border-radius:4px;
+  border:1px solid #c8cccf;
+  color:#6a6f77;
+  -web-kit-appearance:none;
+  -moz-appearance: none;
+  display:block;
+  outline:0;
+  padding:0 1em;
+  text-decoration:none;
+}
+:-moz-placeholder {
+  color: #6a6f77;
+}
+:-moz-placeholder {
+  color: #6a6f77;
+}
+input:-webkit-input-placeholder{
+  color: #6a6f77;
+}

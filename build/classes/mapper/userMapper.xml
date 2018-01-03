@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyq.dao.UserDao">
+	<insert id="addUser" parameterType="User">
+		INSERT INTO
+			USER(user_account,user_password,resume_id)
+		VALUES(#{userAccount},#{userPassword},#{resume.resumeId})
+	</insert>
+	
+	<select id="queryUserByAccount" resultType="User">
+		SELECT
+			*
+		FROM
+			USER
+		WHERE
+			user_Account=#{userAccount}
+	</select>
+	
+	<select id="queryUser" parameterType="User" resultMap="queryU">
+		SELECT
+			*
+		FROM
+			USER u,RESUME r
+		WHERE
+			u.user_Account=#{userAccount} and u.user_password=#{userPassword} and u.resume_id=r.resume_id
+	</select>
+	
+	<update id="updatePassword" parameterType="User">
+		UPDATE
+			USER
+		SET
+			USER_PASSWORD=#{userPassword}
+		WHERE
+			USER_ID=#{userId}
+	</update>
+	
+	
+	<resultMap type="User" id="queryU">
+		<id column="user_id" property="userId"/>
+		<result column="user_account" property="userAccount"/>
+		<result column="user_password" property="userPassword"/>
+		<association property="resume" javaType="Resume">
+			<id column="resume_id" property="resumeId"/>
+			<result column="real_name" property="realName"/>
+			<result column="age" property="age"/>
+			<result column="contact_info" property="contactInfo"/>
+			<result column="position" property="position"/>
+			<result column="department" property="department"/>
+			<result column="job_experience" property="jobExperience"/>
+			<result column="expected_salary" property="expectedSalary"/>
+			<result column="gender" property="gender"/>
+			<result column="education" property="education"/>
+			<result column="e_mail" property="eMail"/>
+			<result column="political_status" property="politicalStatus"/>
+			<result column="hobby" property="hobby"/>
+		</association>
+	</resultMap>
+</mapper>
