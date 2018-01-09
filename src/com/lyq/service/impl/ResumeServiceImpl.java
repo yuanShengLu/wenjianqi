@@ -1,5 +1,6 @@
 package com.lyq.service.impl;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,7 @@ public class ResumeServiceImpl implements ResumeService {
 	public void updateResume(Resume resume) {
 		resumeDao.updateResume(resume);
 	}
-	
+	public void updateRecId(Integer resumeId,Integer recId,Integer resumeIsRead) {
+		resumeDao.updateRecId(resumeId, recId,resumeIsRead);
+	}
 }

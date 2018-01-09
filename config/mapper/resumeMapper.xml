@@ -23,4 +23,13 @@
 		WHERE
 			resume_id=#{resumeId}
 	</update>
+	
+	<update id="updateRecId">
+		UPDATE
+			RESUME
+		SET
+			rec_id=#{recId},resume_isRead=#{resumeIsRead}
+		WHERE
+			resume_id=#{resumeId}
+	</update>
 </mapper>

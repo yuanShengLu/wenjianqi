@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyq.dao.DepartmentDao">
+	<insert id="addDept" parameterType="Department">
+		INSERT INTO
+			DEPARTMENT(dept_name)
+		VALUES(#{deptName})
+	</insert>
+	
+	<select id="queryDeptByName" resultType="Department">
+		SELECT
+			*
+		FROM
+			DEPARTMENT
+		WHERE
+			dept_name=#{deptName}
+	</select>
+	
+	<select id="queryAllDeptNameAndId" resultType="Department">
+		SELECT
+			*
+		FROM
+			DEPARTMENT
+	</select>
+	
+	<select id="queryDeptById" resultType="Department">
+		SELECT
+			*
+		FROM
+			DEPARTMENT
+		WHERE
+			DEPT_ID=#{deptId}
+	</select>
+	
+	<select id="queryAllDept" resultMap="queryAllDept">
+		SELECT
+			*
+		FROM 
+			DEPARTMENT d,POSITION P
+		WHERE d.dept_id=p.po_dept_id
+	</select>
+	
+	<resultMap type="Department" id="queryAllDept">
+		<id column="dept_id" property="deptId"/>
+		<result column="dept_name" property="deptName"/>
+		<collection property="pList" ofType="Position">
+			<id column="po_id" property="poId"/>
+			<result column="po_name" property="poName"/>
+		</collection>
+	</resultMap>
+</mapper>

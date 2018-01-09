@@ -8,13 +8,13 @@
 		VALUES(#{userAccount},#{userPassword},#{resume.resumeId})
 	</insert>
 	
-	<select id="queryUserByAccount" resultType="User">
+	<select id="queryUserByAccount" resultMap="queryU">
 		SELECT
 			*
 		FROM
-			USER
+			USER u,RESUME r
 		WHERE
-			user_Account=#{userAccount}
+			user_Account=#{userAccount} and u.resume_id=r.resume_id
 	</select>
 	
 	<select id="queryUser" parameterType="User" resultMap="queryU">

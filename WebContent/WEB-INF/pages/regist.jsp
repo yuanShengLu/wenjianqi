@@ -18,7 +18,7 @@
 				<font color="white" size="5">用户密码</font><input type="text" name="password"></p>
 				<font color="white" size="5">确认密码</font><input type="text" name="confirmPassword"></p>
 				<font color="orange" name="info">账户：6-20位字母或数字<br/>密码：6-20位字母或数字或特殊字符</font></p>
-				<input type="submit" value="提交" name="regist"></p>
+				<input type="submit" value="提交" name="regist" style="margin-left: 100px"></p>
 			</form>
 		</div>
 	

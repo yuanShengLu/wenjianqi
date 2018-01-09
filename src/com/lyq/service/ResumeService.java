@@ -1,5 +1,7 @@
 package com.lyq.service;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.lyq.entity.Resume;
 
 public interface ResumeService {
@@ -13,4 +15,5 @@ public interface ResumeService {
 	 * @param resume
 	 */
 	public void updateResume(Resume resume);
+	public void updateRecId(Integer resumeId,Integer recId,Integer resumeIsRead);
 }

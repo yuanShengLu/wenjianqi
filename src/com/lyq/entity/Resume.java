@@ -14,6 +14,22 @@ public class Resume {
 	private String eMail;
 	private String politicalStatus;
 	private String hobby;
+	private int recId;
+	private int resumeIsRead;
+	
+	
+	public int getResumeIsRead() {
+		return resumeIsRead;
+	}
+	public void setResumeIsRead(int resumeIsRead) {
+		this.resumeIsRead = resumeIsRead;
+	}
+	public int getRecId() {
+		return recId;
+	}
+	public void setRecId(int recId) {
+		this.recId = recId;
+	}
 	public int getResumeId() {
 		return resumeId;
 	}
@@ -100,7 +116,9 @@ public class Resume {
 		return "Resume [resumeId=" + resumeId + ", realName=" + realName + ", age=" + age + ", contactInfo="
 				+ contactInfo + ", position=" + position + ", department=" + department + ", jobExperience="
 				+ jobExperience + ", expectedSalary=" + expectedSalary + ", gender=" + gender + ", education="
-				+ education + ", eMail=" + eMail + ", politicalStatus=" + politicalStatus + ", hobby=" + hobby + "]";
+				+ education + ", eMail=" + eMail + ", politicalStatus=" + politicalStatus + ", hobby=" + hobby
+				+ ", recId=" + recId + "]";
 	}
+	
 	
 }

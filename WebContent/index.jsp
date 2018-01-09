@@ -26,8 +26,8 @@
 		<form action="#" method="post">
 			<font color="white" size="5">用户账户</font><input type="text" name="name"></p>
 			<font color="white" size="5">用户密码</font><input type="text" name="password"><br/></p>
-			<input type="submit" value="登陆" name="login"></p>
-			<input type="submit" value="注册" name="regist"></p>
+			<input type="submit" value="登陆" name="login" style="margin-left: 100px"></p>
+			<input type="submit" value="注册" name="regist" style="margin-left: 100px"></p>
 		</form>
 	</div>
 

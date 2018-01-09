@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyq.dao.PositionDao">
+	<insert id="addPosition" parameterType="Position">
+		INSERT INTO POSITION (po_name, po_dept_id) VALUES(#{poName},#{poDeptId})
+	</insert>
+	
+	<select id="queryPositionByDept" resultType="Position">
+		SELECT
+			*
+		FROM
+			POSITION
+		WHERE
+			po_dept_id=#{deptId}
+	</select>
+	
+	<select id="queryEmployeesByPositionName" resultMap="queryEmployeesByPositionName">
+		SELECT
+			*
+		FROM
+			POSITION p,EMPLOYEE e
+		WHERE
+			p.po_name=#{poName} AND p.po_id=e.emp_position_id
+	</select>
+	
+	<resultMap type="Position" id="queryEmployeesByPositionName">
+		<id column="po_id" property="poId"/>
+		<result column="po_name" property="poName"/>
+		<result column="po_dept_id" property="poDeptId"/>
+		<collection property="employees" ofType="Employee">
+			<id column="emp_id" property="empId"/>
+			<result column="emp_name" property="empName"/>
+			<result column="emp_account" property="empAccount"/>
+			<result column="emp_password" property="empPassword"/>
+			<result column="emp_salary" property="empSalary"/>
+			<result column="emp_serving_time" property="empServingTime"/>
+		</collection>
+	</resultMap>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyq.dao.SupervisorDao">
+	<select id="login" parameterType="Supervisor" resultType="Supervisor">
+		SELECT
+			*
+		FROM
+			SUPERVISOR
+		WHERE
+			sup_account=#{supAccount} AND sup_password=#{supPassword}
+	</select>
+	
+	<select id="querySupBySupId" resultType="Supervisor">
+		SELECT
+			*
+		FROM
+			SUPERVISOR
+		WHERE
+			SUP_ID=#{supId}
+	</select>
+</mapper>

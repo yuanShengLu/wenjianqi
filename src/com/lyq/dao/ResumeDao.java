@@ -1,5 +1,7 @@
 package com.lyq.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.lyq.entity.Resume;
 
 public interface ResumeDao {
@@ -16,4 +18,10 @@ public interface ResumeDao {
 	 * @param resume
 	 */
 	public void updateResume(Resume resume);
+	/**
+	 * 投递简历修改简历中招聘信息ID
+	 * @param resumeId
+	 * @param recId
+	 */
+	public void updateRecId(@Param("resumeId")Integer resumeId,@Param("recId")Integer recId,@Param("resumeIsRead")Integer resumeIsRead);
 }

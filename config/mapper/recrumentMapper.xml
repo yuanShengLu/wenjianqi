@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyq.dao.RecruitmentDao">
+	<insert id="addRecru" parameterType="Recruitment">
+		INSERT INTO
+			RECRUITMENT(REC_POSITION,REC_DEPT,REC_WORK_PLACE,REC_SALARY,REC_RELEASE_TIME,REC_SUPERVISOR_ID,REC_WORK_DESCRIBE)
+		VALUES(#{recPosition},#{recDept},#{recWorkPlace},#{recSalary},#{recReleaseTime},#{recSupervisorId},#{recWorkDescribe})	
+	</insert>
+	
+	<select id="queryLimitedRec" parameterType="Page" resultType="Recruitment">
+		SELECT
+			*
+		FROM
+			RECRUITMENT
+		LIMIT
+			#{itemStartFrom},#{pageSize}
+	</select>
+	
+	<select id="queryRecNum" resultType="Integer">
+		SELECT
+			COUNT(REC_ID)
+		FROM
+			RECRUITMENT
+	</select>
+	
+	<select id="queryNewResume" resultMap="queryNewResume">
+		SELECT
+			*
+		FROM
+			RECRUITMENT REC,RESUME RES
+		WHERE
+			REC.REC_SUPERVISOR_ID=#{ID} AND REC.REC_ID=RES.REC_ID AND RES.RESUME_ISREAD=0
+	</select>
+	
+	<resultMap type="Recruitment" id="queryNewResume">
+		<id column="rec_id" property="recId"/>
+		<result column="rec_position" property="recPosition"/>
+		<result column="rec_dept" property="recDept"/>
+		<result column="rec_work_place" property="recWorkPlace"/>
+		<result column="rec_salary" property="recSalary"/>
+		<result column="rec_release_time" property="recReleaseTime"/>
+		<result column="rec_supervisor_id" property="recSupervisorId"/>
+		<result column="rec_work_describe" property="recWorkDescribe"/>
+		<collection property="resumes" ofType="Resume">
+			<id column="resume_id" property="resumeId"/>
+			<result column="real_name" property="realName"/>
+			<result column="age" property="age"/>
+			<result column="contact_info" property="contactInfo"/>
+			<result column="job_experience" property="jobExperience"/>
+			<result column="expected_salary" property="expectedSalary"/>
+			<result column="gender" property="gender"/>
+			<result column="education" property="education"/>
+			<result column="e_mail" property="eMail"/>
+			<result column="political_status" property="politicalStatus"/>
+			<result column="hobby" property="hobby"/>
+			<result column="position" property="position"/>
+		</collection>
+	</resultMap>
+</mapper>
