@@ -15,7 +15,7 @@ public class Resume {
 	private String politicalStatus;
 	private String hobby;
 	private int recId;
-	private int resumeIsRead;
+	private Integer resumeIsRead;
 	
 	
 	public int getResumeIsRead() {

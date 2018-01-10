@@ -25,4 +25,10 @@ public interface UserDao {
 	 * @param password
 	 */
 	public void updatePassword(User user);
+	/**
+	 * 根据简历ID查询User
+	 * @param resumeId
+	 * @return
+	 */
+	public User queryUserByResumeId(Integer resumeId);
 }

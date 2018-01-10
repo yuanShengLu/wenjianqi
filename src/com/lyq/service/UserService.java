@@ -7,4 +7,5 @@ public interface UserService {
 	public User queryUserByAccount(String name);
 	public User queryUser(User user);
 	public void updatePassword(User user);
+	public User queryUserByResumeId(Integer resumeId);
 }

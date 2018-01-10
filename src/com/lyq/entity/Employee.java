@@ -9,13 +9,27 @@ public class Employee {
 	private String empPassword;
 	private Resume resume;
 	private int empDeptId;
+	private int empResumeId;
+	private int empSupId;
 	private Supervisor supervisor;
-	private int empSalary;
+	private double empSalary;
 	private int empPositionId;
 	private Date empServingTime;
 	private String empStatus;
 	
 	
+	public int getEmpResumeId() {
+		return empResumeId;
+	}
+	public void setEmpResumeId(int empResumeId) {
+		this.empResumeId = empResumeId;
+	}
+	public int getEmpSupId() {
+		return empSupId;
+	}
+	public void setEmpSupId(int empSupId) {
+		this.empSupId = empSupId;
+	}
 	public String getEmpStatus() {
 		return empStatus;
 	}
@@ -76,10 +90,11 @@ public class Employee {
 	public void setEmpDeptId(int empDeptId) {
 		this.empDeptId = empDeptId;
 	}
-	public int getEmpSalary() {
+	
+	public double getEmpSalary() {
 		return empSalary;
 	}
-	public void setEmpSalary(int empSalary) {
+	public void setEmpSalary(double empSalary) {
 		this.empSalary = empSalary;
 	}
 	public Employee() {
@@ -88,10 +103,13 @@ public class Employee {
 	}
 	@Override
 	public String toString() {
-		return "Employee [empId=" + empId + ", empAccount=" + empAccount + ", empPassword=" + empPassword + ", resume="
-				+ resume + ", empDeptId=" + empDeptId + ", supervisor=" + supervisor + ", empSalary=" + empSalary
-				+ ", empPositionId=" + empPositionId + ", empServingTime=" + empServingTime + "]";
+		return "Employee [empId=" + empId + ", empName=" + empName + ", empAccount=" + empAccount + ", empPassword="
+				+ empPassword + ", resume=" + resume + ", empDeptId=" + empDeptId + ", empResumeId=" + empResumeId
+				+ ", empSupId=" + empSupId + ", supervisor=" + supervisor + ", empSalary=" + empSalary
+				+ ", empPositionId=" + empPositionId + ", empServingTime=" + empServingTime + ", empStatus=" + empStatus
+				+ "]";
 	}
+	
 	
 	
 }

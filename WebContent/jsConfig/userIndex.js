@@ -10,23 +10,34 @@ $(function() {
 	}
 	$("div[name=cp]").hide();
 	$("div[name=check]").hide();
+	$("div[name=report]").hide();
 	
 	$("img[name=cp]").click(function() {
+		$("div[name=report]").hide();
 		$("div[name=send]").hide();
 		$("div[name=check]").hide();
 		$("div[name=cp]").show();
 	})
 	
 	$("img[name=check]").click(function() {
+		$("div[name=report]").hide();
 		$("div[name=cp]").hide();
 		$("div[name=send]").hide();
 		$("div[name=check]").show();
 	})
 	
 	$("img[name=send]").click(function() {
+		$("div[name=report]").hide();
 		$("div[name=cp]").hide();
 		$("div[name=check]").hide();
 		$("div[name=send]").show();
+	})
+	
+	$("img[name=report]").click(function() {
+		$("div[name=cp]").hide();
+		$("div[name=check]").hide();
+		$("div[name=send]").hide();
+		$("div[name=report]").show();
 	})
 	
 	$("img[name=back]").click(function() {
@@ -117,8 +128,24 @@ $(function() {
 		alert("投递成功")
 	})
 	
-	
-	
+	$("button[name=attendInter]").click(function() {
+		var isAttend = $(this).val();
+		var userId = $(":hidden[name=isAttendUserId]").val();
+		var tr1 = $(this).parent().parent().prev().prev();
+		var tr2 = $(this).parent().parent().prev();
+		var tr3 = $(this).parent().parent();
+		$.ajax({
+			url:"http://localhost:8080/FinalProject/recruitmentHandler/ajaxIsAttend",
+			data:{isAttend:isAttend,userId:userId},
+			type:"post",
+			success:function(data){
+				alert("操作成功")
+				tr1.remove();
+				tr2.remove();
+				tr3.remove();
+			}
+		})
+	})
 	
 	
 	

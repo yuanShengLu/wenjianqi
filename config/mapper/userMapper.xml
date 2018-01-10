@@ -35,6 +35,14 @@
 			USER_ID=#{userId}
 	</update>
 	
+	<select id="queryUserByResumeId" resultType="User">
+		SELECT
+			*
+		FROM
+			USER u
+		WHERE
+			resume_id=#{id}
+	</select>
 	
 	<resultMap type="User" id="queryU">
 		<id column="user_id" property="userId"/>
@@ -54,6 +62,7 @@
 			<result column="e_mail" property="eMail"/>
 			<result column="political_status" property="politicalStatus"/>
 			<result column="hobby" property="hobby"/>
+			<result column="resume_isAgree" property="resumeIsAgree"/>
 		</association>
 	</resultMap>
 </mapper>

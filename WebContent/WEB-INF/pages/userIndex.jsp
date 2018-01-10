@@ -20,6 +20,9 @@
 		<c:if test="${user.resume.realName!=null}">
 			<font size="3" color="orange">欢迎用户${user.resume.realName },人才市场济济赶紧投递您的简历吧</font><br/>
 		</c:if>
+		<c:if test="${iList.size()!=0}">
+			<font size="3" color="orange">您有新的面试邀约，请查看！</font>
+		</c:if>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/check.png" name="check"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/send.png" name="send"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/report.png" name="report"><br/>
@@ -151,6 +154,84 @@
 			</table>
 		
 		</div>
+		
+		<!-- 反馈信息 -->
+		<div name="report" style="width:70%;text-align: center;margin-top: 10%;margin-left: 15%;">
+			<table border="2px" cellpadding="6" cellspacing="0">
+				<tr>
+					<td colspan="7"><font size="5" color="orange">面试邀约</font></td>
+				</tr>
+				<tr>
+					<td>
+						<font size="3" color="orange">面试职位</font>
+					</td>
+					<td>
+						<font size="3" color="orange">部门</font>
+					</td>
+					<td>
+						<font size="3" color="orange">工作地点</font>
+					</td>
+					<td>
+						<font size="3" color="orange">薪资范围</font>
+					</td>
+					<td>
+						<font size="3" color="orange">招聘信息发布时间</font>
+					</td>
+					<td>
+						<font size="3" color="orange">岗位需求</font>
+					</td>
+					<td>
+						<font size="3" color="orange">面试时间</font>
+					</td>
+				</tr>
+				<c:if test="${iList.size()!=0 }">
+					<c:forEach items="${iList }" var="inter">
+						<tr>
+							<td>
+								<font size="3" color="orange">${inter.recruitment.recPosition }</font>
+							</td>
+							<td>
+								<font size="3" color="orange">${inter.recruitment.recDept }</font>
+							</td>
+							<td>
+								<font size="3" color="orange">${inter.recruitment.recWorkPlace }</font>
+							</td>
+							<td>
+								<font size="3" color="orange">${inter.recruitment.recSalary }</font>
+							</td>
+							<td>
+								<font size="3" color="orange"><f:formatDate value="${inter.recruitment.recReleaseTime }" pattern="yyyy-MM-dd"/></font>
+							</td>
+							<td>
+								<font size="3" color="orange">${inter.recruitment.recWorkDescribe }</font>
+							</td>
+							<td>
+								<font size="3" color="orange"><f:formatDate value="${inter.interTime}" pattern="yyyy-MM-dd"/></font>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="7"><font size="3" color="orange">接受面试</font></td>
+						</tr>
+						<tr>
+							<td colspan="7"><button name="attendInter" value="1">按时参加面试</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button name="attendInter" value="0">拒绝面试</button><input type="hidden" value="${user.userId}" name="isAttendUserId"></td>
+						</tr>
+					</c:forEach>
+				</c:if>
+			</table>
+			<c:if test="${iList.size()==0 }">
+				<font size="5" color="orange">您暂时没有面试邀约！</font>
+			</c:if>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	</div>
 </body>

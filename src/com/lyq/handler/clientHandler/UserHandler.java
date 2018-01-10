@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyq.entity.Admin;
 import com.lyq.entity.Department;
+import com.lyq.entity.Interview;
 import com.lyq.entity.Page;
 import com.lyq.entity.Position;
 import com.lyq.entity.Recruitment;
@@ -18,6 +19,7 @@ import com.lyq.entity.Supervisor;
 import com.lyq.entity.User;
 import com.lyq.service.AdminService;
 import com.lyq.service.DepartmentService;
+import com.lyq.service.InterviewService;
 import com.lyq.service.PositionService;
 import com.lyq.service.RecruitmentService;
 import com.lyq.service.ResumeService;
@@ -41,6 +43,8 @@ public class UserHandler {
 	private PositionService positionService;
 	@Autowired
 	private RecruitmentService recruitmentService;
+	@Autowired
+	private InterviewService interviewService;
 	
 	@RequestMapping("regist")
 	public String regist(String name,String password,Model model) {
@@ -88,6 +92,8 @@ public class UserHandler {
 			model.addAttribute("pList", pList);
 			List<Recruitment> recList = recruitmentService.queryNewResume(supervisor.getSupId());
 			model.addAttribute("rec", recList);
+			List<Interview> iList = interviewService.queryInterviewBySupId(supervisor.getSupId());
+			model.addAttribute("iList", iList);
 			return "supIndex";
 		}
 		user = userService.queryUser(user);
@@ -104,6 +110,8 @@ public class UserHandler {
 		List<Recruitment> rList = recruitmentService.queryLimitedRec(page);
 		page.setList(rList);
 		model.addAttribute("page", page);
+		List<Interview> iList = interviewService.queryInterviewByUserId(user.getUserId());
+		model.addAttribute("iList", iList);
 		return "userIndex";
 	}
 	
@@ -152,6 +160,8 @@ public class UserHandler {
 		page.setList(rList);
 		model.addAttribute("page", page);
 		model.addAttribute("isTurnPage", isTurnPage);
+		List<Interview> iList = interviewService.queryInterviewByUserId(user.getUserId());
+		model.addAttribute("iList", iList);
 		return "userIndex";
 	}
 	

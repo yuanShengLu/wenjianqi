@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyq.dao.InterviewDao">
+	<insert id="addInterview" parameterType="Interview">
+		INSERT INTO
+			INTERVIEW(USER_ID,INTER_TIME,INTER_ISACCEPT,rec_id,resume_id,sup_id)
+		VALUES(#{userId},#{interTime},#{interIsAccept},#{recId},#{resumeId},#{supId})
+	</insert>
+	
+	<select id="queryInterviewByUserId" resultMap="queryInterviewByUserId">
+		SELECT
+			*
+		FROM
+			INTERVIEW I,RECRUITMENT R
+		WHERE
+			I.USER_ID=#{userId} AND I.REC_ID=R.REC_ID AND I.INTER_ISACCEPT=2
+	</select>
+	
+	<resultMap type="Interview" id="queryInterviewByUserId">
+		<id column="inter_id" property="interId"/>
+		<result column="inter_isAccept" property="interIsAccept"/>
+		<result column="user_id" property="userId"/>
+		<result column="inter_time" property="interTime"/>
+		<association property="recruitment" javaType="Recruitment">
+			<id column="rec_id" property="recId"/>
+			<result column="rec_position" property="recPosition"/>
+			<result column="rec_dept" property="recDept"/>
+			<result column="rec_work_place" property="recWorkPlace"/>
+			<result column="rec_salary" property="recSalary"/>
+			<result column="rec_release_time" property="recReleaseTime"/>
+			<result column="rec_work_describe" property="recWorkDescribe"/>
+		</association>
+	</resultMap>
+	
+	<update id="updateIsAccept">
+		UPDATE
+			INTERVIEW
+		SET
+			INTER_ISACCEPT=#{isAttend}
+		WHERE
+			user_id=#{userId}
+	</update>
+	
+	<select id="queryInterviewBySupId" resultMap="queryInterviewBySupId">
+		SELECT
+			*
+		FROM
+			INTERVIEW I,RECRUITMENT REC,RESUME RES
+		WHERE
+			I.SUP_ID=#{supId} AND I.INTER_ISACCEPT=1 AND I.RESUME_ID=RES.RESUME_ID AND REC.REC_ID=I.REC_ID;
+	</select>
+	
+	<resultMap type="Interview" id="queryInterviewBySupId">
+		<id column="inter_id" property="interId"/>
+		<result column="inter_isAccept" property="interIsAccept"/>
+		<result column="user_id" property="userId"/>
+		<result column="inter_time" property="interTime"/>
+		<association property="recruitment" javaType="Recruitment">
+			<id column="rec_id" property="recId"/>
+			<result column="rec_position" property="recPosition"/>
+			<result column="rec_dept" property="recDept"/>
+			<result column="rec_work_place" property="recWorkPlace"/>
+			<result column="rec_salary" property="recSalary"/>
+			<result column="rec_release_time" property="recReleaseTime"/>
+			<result column="rec_work_describe" property="recWorkDescribe"/>
+		</association>
+		<association property="resume" javaType="Resume">
+			<id column="resume_id" property="resumeId"/>
+			<result column="real_name" property="realName"/>
+			<result column="age" property="age"/>
+			<result column="contact_info" property="contactInfo"/>
+			<result column="job_experience" property="jobExperience"/>
+			<result column="expected_salary" property="expectedSalary"/>
+			<result column="gender" property="gender"/>
+			<result column="education" property="education"/>
+			<result column="e_mail" property="eMail"/>
+			<result column="political_status" property="politicalStatus"/>
+			<result column="hobby" property="hobby"/>
+			<result column="position" property="position"/>
+		</association>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
