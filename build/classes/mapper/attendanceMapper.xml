@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyq.dao.AttendanceDao">
+	<insert id="addAttendance" parameterType="Attendance">
+		INSERT INTO
+			ATTENDANCE(EMP_ID,ATT_TIME,ATT_TYPE,ATT_STATUS)
+		VALUES(#{empId},#{attTime},#{attType},#{attStatus})
+	</insert>
+</mapper>

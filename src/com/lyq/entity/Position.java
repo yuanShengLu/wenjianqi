@@ -1,5 +1,6 @@
 package com.lyq.entity;
 
+import java.util.Date;
 import java.util.List;
 
 public class Position {
@@ -7,8 +8,15 @@ public class Position {
 	private String poName;
 	private int poDeptId;
 	private List<Employee> employees;
+	private Date poCreateTime;
 	
 	
+	public Date getPoCreateTime() {
+		return poCreateTime;
+	}
+	public void setPoCreateTime(Date poCreateTime) {
+		this.poCreateTime = poCreateTime;
+	}
 	public List<Employee> getEmployees() {
 		return employees;
 	}

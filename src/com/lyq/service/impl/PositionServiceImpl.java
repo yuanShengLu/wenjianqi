@@ -25,4 +25,14 @@ public class PositionServiceImpl implements PositionService {
 	public Position queryEmployeesByPositionName(String posiName) {
 		return positionDao.queryEmployeesByPositionName(posiName);
 	}
+	public Position queryPositionByPoName(String posiName) {
+		return positionDao.queryPositionByPoName(posiName);
+	}
+	public void delPosiByPoName(String posiName) {
+		positionDao.delPosiByPoName(posiName);
+	}
+	public void updatePoName(String oldName,String updatePoName) {
+		Integer poId = positionDao.queryPositionByPoName(oldName).getPoId();
+		positionDao.updatePoName(poId, updatePoName);
+	}
 }

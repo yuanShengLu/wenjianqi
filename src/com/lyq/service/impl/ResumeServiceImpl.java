@@ -24,4 +24,7 @@ public class ResumeServiceImpl implements ResumeService {
 	public void updateRecId(Integer resumeId,Integer recId,Integer resumeIsRead) {
 		resumeDao.updateRecId(resumeId, recId,resumeIsRead);
 	}
+	public Resume queryResumeByResumeId(Integer rsumeId) {
+		return resumeDao.queryResumeByResumeId(rsumeId);
+	}
 }

@@ -32,4 +32,13 @@
 		WHERE
 			resume_id=#{resumeId}
 	</update>
+	
+	<select id="queryResumeByResumeId" resultType="Resume">
+		SELECT
+			*
+		FROM
+			RESUME
+		WHERE
+			RESUME_ID=#{ID}
+	</select>
 </mapper>

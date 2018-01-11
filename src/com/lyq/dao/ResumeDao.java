@@ -24,4 +24,10 @@ public interface ResumeDao {
 	 * @param recId
 	 */
 	public void updateRecId(@Param("resumeId")Integer resumeId,@Param("recId")Integer recId,@Param("resumeIsRead")Integer resumeIsRead);
+	/**
+	 * 根据简历ID查询简历
+	 * @param rsumeId
+	 * @return
+	 */
+	public Resume queryResumeByResumeId(Integer rsumeId);
 }

@@ -31,4 +31,14 @@ public interface DepartmentDao {
 	 * @return
 	 */
 	public Department queryDeptById(Integer deptId);
+	/**
+	 * 根据ID删除部门
+	 * @param deptId
+	 */
+	public void delDept(Integer deptId);
+	/**
+	 * 更新部门名字
+	 * @param deptId
+	 */
+	public void updateDept(Integer deptId,String deptNewName);
 }

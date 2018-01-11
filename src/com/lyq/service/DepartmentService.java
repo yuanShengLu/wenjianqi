@@ -10,4 +10,12 @@ public interface DepartmentService {
 	public Department queryDeptByName(String deptName);
 	public List<Department> queryAllDeptNameAndId();
 	public Department queryDeptById(Integer deptId);
+	/**
+	 * 查看部门下有没有员工
+	 * @param deptId
+	 * @return 员工数量
+	 */
+	public Integer hasEmployee(Integer deptId);
+	public void delDept(Integer deptId);
+	public void updateDept(Integer deptId,String deptNewName);
 }

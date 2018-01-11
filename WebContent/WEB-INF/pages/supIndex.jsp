@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div class="left">
-		<font color="orange">亲爱的主管${sup.supName}，今天又是朝气蓬勃的一天！</font><br>
+		<font color="orange">亲爱的${dept.deptName }主管${sup.supName}，今天又是朝气蓬勃的一天！</font><br>
 		<c:forEach items="${rec}" var="r">
 			<c:if test="${r.resumes.size()!=0 }">
 				<font>您部门${r.recPosition }岗位有${r.resumes.size()}个未办面试请求!</font><br>
@@ -26,10 +26,16 @@
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/createRecruitment.png" name="createRecruitment"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/checkintvinfo.png" name="readResumes"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/intvevent.png" name="interview"><br/>
+		<img class="navigation" src="${pageContext.request.contextPath }/imgs/deptInfo.png" name="deptInfo"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/button.png" name=""><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/tuichu.png" name="back"><br/>
 	</div>
 	<div class="right">
+		<img src="${pageContext.request.contextPath }/imgs/shangban.png" name="sad" style="right:0;top:200px;width: 100px;height: 100px;position: absolute;">
+		<font size="5" style="position: absolute;right:40px;top:300px">上班</font>
+		<img src="${pageContext.request.contextPath }/imgs/shangban.png" name="happy" style="right:0;top:400px;width: 100px;height: 100px;position: absolute;">
+		<font size="5" style="position: absolute;right:40px;top:500px">下班</font>
+		
 		<!-- 发布招聘信息 -->
 		<div class="info" name="createRecruitment">
 			<form action="${pageContext.request.contextPath }/recruitmentHandler/createRecru?supId=${sup.supId}&supDeptId=${sup.supDeptId}" method="post" onsubmit="return false" name="createRecruitment">
@@ -163,7 +169,7 @@
 						</tr>
 						<tr class="${i.interId}"><td colspan="6"><font>工作经验</font></td></tr>
 						<tr class="${i.interId}"><td colspan="6"><font>${i.resume.jobExperience}</font></td></tr>
-						<tr class="${i.interId}"><td colspan="6"><button style="width: 100px;height: 50px" name="addEmp">AGREE</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button name="disAgree" style="width: 100px;height: 50px">PASS</button></td></tr>
+						<tr class="${i.interId}"><td colspan="6"><button style="width: 100px;height: 50px" name="addEmp">AGREE</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button name="disAgree" style="width: 100px;height: 50px" value="${i.interId}">PASS</button></td></tr>
 						<tr name="salary" class="${i.interId}">
 							<td colspan="3">
 								<font>请谨慎填写商议后的员工薪资</font>
@@ -177,12 +183,38 @@
 					</c:forEach>
 				</c:if>
 				<c:if test="${iList.size()==0}">
-					<font>您暂时没有面试需要参加！</font>
+					<font size="6">您暂时没有面试需要参加！</font>
 				</c:if>
 			</table>
 		</div>
 	
-	
+		<!-- 查看部门信息 -->
+		<div class="info" name="deptInfo">
+			<div name="all">
+			<font size="5">部门</font>
+			<select name="deptInfo">
+				<option>${dept.deptName }</option>
+			</select>
+			<font size="5">职位</font>
+			<select name="posiInfo">
+				<option>-请选择-</option>
+				<c:forEach items="${pList}" var="p">
+					<option>${p.poName }</option>
+				</c:forEach>
+			</select>
+			
+			<table border="2 solid" cellpadding="5" cellspacing="0" align="center" style="margin-top: 30px;width:100%">
+				<tr><td colspan="6"><b><font>员工信息</font></b></td></tr>
+				<tr name="title">
+					<td><font>ID</font></td>
+					<td><font>姓名</font></td>
+					<td><font>账号</font></td>
+					<td><font>基本工资</font></td>
+					<td><font>入职时间</font></td>
+					<td><font>详细信息</font></td>
+				</tr>
+			</table>
+		</div>
 	
 	
 	

@@ -1,5 +1,6 @@
 package com.lyq.handler.clientHandler;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyq.entity.Admin;
 import com.lyq.entity.Department;
+import com.lyq.entity.Employee;
 import com.lyq.entity.Interview;
 import com.lyq.entity.Page;
 import com.lyq.entity.Position;
@@ -19,6 +21,7 @@ import com.lyq.entity.Supervisor;
 import com.lyq.entity.User;
 import com.lyq.service.AdminService;
 import com.lyq.service.DepartmentService;
+import com.lyq.service.EmployeeService;
 import com.lyq.service.InterviewService;
 import com.lyq.service.PositionService;
 import com.lyq.service.RecruitmentService;
@@ -45,6 +48,8 @@ public class UserHandler {
 	private RecruitmentService recruitmentService;
 	@Autowired
 	private InterviewService interviewService;
+	@Autowired
+	private EmployeeService employeeService;
 	
 	@RequestMapping("regist")
 	public String regist(String name,String password,Model model) {
@@ -78,6 +83,10 @@ public class UserHandler {
 		Supervisor supervisor = new Supervisor();
 		supervisor.setSupAccount(name);
 		supervisor.setSupPassword(password);
+		Employee employee = new Employee();
+		employee.setEmpAccount(name);
+		employee.setEmpPassword(password);
+		
 		admin = adminService.queryAdmin(admin);
 		if(admin!=null) {
 			List<Department> dList = departmentService.queryAllDeptNameAndId();
@@ -90,11 +99,23 @@ public class UserHandler {
 			model.addAttribute("sup", supervisor);
 			List<Position> pList = positionService.queryPositionByDept(supervisor.getSupDeptId());
 			model.addAttribute("pList", pList);
+			Department dept = departmentService.queryDeptById(supervisor.getSupDeptId());
+			model.addAttribute("dept", dept);
 			List<Recruitment> recList = recruitmentService.queryNewResume(supervisor.getSupId());
 			model.addAttribute("rec", recList);
 			List<Interview> iList = interviewService.queryInterviewBySupId(supervisor.getSupId());
 			model.addAttribute("iList", iList);
 			return "supIndex";
+		}
+		employee = employeeService.login(employee);
+		if(employee!=null&&!employee.getEmpStatus().equals("离职")) {
+			Date now = new Date();
+			if(now.getTime()-employee.getEmpServingTime().getTime()>2592000000l&&!employee.getEmpStatus().equals("在职")&&!employee.getEmpStatus().contains("离职")) {
+				employee.setEmpStatus("在职");
+				employeeService.updateEmpStatus("在职", employee.getEmpId());
+			}
+			model.addAttribute("emp", employee);
+			return "empIndex";
 		}
 		user = userService.queryUser(user);
 		if(user==null)

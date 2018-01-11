@@ -29,4 +29,8 @@ public class InterviewServiceImpl implements InterviewService {
 	public List<Interview> queryInterviewBySupId(Integer supId){
 		return interviewDao.queryInterviewBySupId(supId);
 	}
+	
+	public void updateIsAcceptFromSup(Integer isAgree,Integer interId) {
+		interviewDao.updateIsAcceptFromSup(isAgree, interId);
+	}
 }

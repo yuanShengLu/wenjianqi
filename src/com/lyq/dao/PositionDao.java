@@ -22,4 +22,21 @@ public interface PositionDao {
 	 * @return
 	 */
 	public Position queryEmployeesByPositionName(String posiName);
+	/**
+	 * 根据职位查询职位，不包括员工信息
+	 * @param posiName
+	 * @return
+	 */
+	public Position queryPositionByPoName(String posiName);
+	/**
+	 * 根据职位名称删除职位
+	 * @param posiName
+	 */
+	public void delPosiByPoName(String posiName);
+	/**
+	 * 更新职位名字
+	 * @param poId
+	 * @param updatePoName
+	 */
+	public void updatePoName(Integer poId,String updatePoName);
 }

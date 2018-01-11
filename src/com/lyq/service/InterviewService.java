@@ -11,4 +11,5 @@ public interface InterviewService {
 	public List<Interview> queryInterviewByUserId(Integer userId);
 	public void updateIsAccept(Integer isAttend,Integer userId);
 	public List<Interview> queryInterviewBySupId(Integer supId);
+	public void updateIsAcceptFromSup(Integer isAgree,Integer interId);
 }

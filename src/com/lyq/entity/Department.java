@@ -1,14 +1,23 @@
 package com.lyq.entity;
 
+import java.util.Date;
 import java.util.List;
 
 public class Department {
 	private int deptId;
 	private String deptName;
+	private Date deptCreateTime;
 	private List<Position> pList;
 	private Supervisor supervisor;
 	private List<Employee> employees;
 	
+	
+	public Date getDeptCreateTime() {
+		return deptCreateTime;
+	}
+	public void setDeptCreateTime(Date deptCreateTime) {
+		this.deptCreateTime = deptCreateTime;
+	}
 	public Supervisor getSupervisor() {
 		return supervisor;
 	}

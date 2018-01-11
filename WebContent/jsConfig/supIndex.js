@@ -5,6 +5,7 @@ $(function() {
 	$("tr[name=salary]").hide();
 	$("button[name=hire]").hide();
 	$("div[name=interview]").hide();
+	$("div[name=deptInfo]").hide();
 	
 	
 	$("img[name=back]").click(function() {
@@ -14,19 +15,29 @@ $(function() {
 	$("img[name=createRecruitment]").click(function() {
 		$("div[name=interview]").hide();
 		$("div[name=readResumes]").hide();
+		$("div[name=deptInfo]").hide();
 		$("div[name=createRecruitment]").show();
 	})
 	
 	$("img[name=readResumes]").click(function() {
 		$("div[name=interview]").hide();
 		$("div[name=createRecruitment]").hide();
+		$("div[name=deptInfo]").hide();
 		$("div[name=readResumes]").show();
 	})
 	
 	$("img[name=interview]").click(function() {
 		$("div[name=createRecruitment]").hide();
+		$("div[name=deptInfo]").hide();
 		$("div[name=readResumes]").hide();
 		$("div[name=interview]").show();
+	})
+	
+	$("img[name=deptInfo]").click(function() {
+		$("div[name=createRecruitment]").hide();
+		$("div[name=readResumes]").hide();
+		$("div[name=interview]").hide();
+		$("div[name=deptInfo]").show();
 	})
 	
 	$(":submit[name=recConfirm]").click(function() {
@@ -117,8 +128,71 @@ $(function() {
 		})
 	})
 	
+	$("button[name=disAgree]").click(function() {
+		var interId = $(this).val();
+		var rem = $("tr."+interId);
+		$.ajax({
+			url:"http://localhost:8080/FinalProject/employeeHandler/ajaxDisAgree",
+			type:"post",
+			data:{interId:interId},
+			success:function(data){
+				alert("操作成功")
+				rem.remove();
+			}
+		})
+	})
 	
+	function getzf(num){  
+        if(parseInt(num) < 10){  
+            num = '0'+num;  
+        }  
+        return num;  
+    }  
 	
+	$("select[name=posiInfo]").change(function(){
+		var pInfo = $(this).val();
+		if(pInfo!="-请选择-"){
+			$.ajax({
+				url:"http://localhost:8080/FinalProject/departmentHandler/ajaxQueryEmp",
+				type:"post",
+				data:{pInfo:pInfo},
+				dataType:"json",
+				success:function(data){
+					if(data==0){
+						$("tr[name=addEmp]").remove();
+						alert("当前职位暂时没有员工")
+					}else{
+						$("tr[name=addEmp]").remove();
+						$.each(data,function(idx,item){
+							var oDate = new Date(item.empServingTime);
+							var year = oDate.getFullYear(),
+							oMonth = oDate.getMonth()+1,  
+					        oDay = oDate.getDate(), 
+					        oTime = year+'-'+getzf(oMonth) +'-'+ getzf(oDay);
+							$("tr[name=title]").after("<tr name='addEmp'><td><font>"+item.empId+"</font></td><td><font>"+item.empName+"</font></td><td><font>"+item.empAccount+"</font></td><td><font>"+item.empSalary+"</font></td><td><font>"+oTime+"</font></td><td><button name='chakan' value='"+item.empId+"'>查看</button></td></tr>")
+							$("button[name=chakan]").click(function() {
+								var empId = $(this).val();
+								$("div[name=all]").hide();
+								$.ajax({
+									url:"http://localhost:8080/FinalProject/departmentHandler/ajaxQueryEmpInfo",
+									type:"post",
+									data:{empId:empId},
+									dataType:"json",
+									success:function(data){
+										$("div[name=deptInfo]").append("<div name='inf'><table border='2 solid' cellpadding='5' cellspacing='0' align='center' style='margin-top: 30px;width:100%'><tr><td><font size='5'>个人信息</font></td></tr><tr name='empInfomation'><td><font>培训信息</font></td></tr><tr><td><button name='return'>返回</button></td></tr></table></div>")
+										$("button[name=return]").click(function() {
+											$("div[name=inf]").remove();
+											$("div[name=all]").show();
+										})
+									}
+								})
+							})
+						})
+					}
+				}
+			})
+		}
+	})
 	
 	
 	

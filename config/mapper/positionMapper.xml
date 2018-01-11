@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lyq.dao.PositionDao">
 	<insert id="addPosition" parameterType="Position">
-		INSERT INTO POSITION (po_name, po_dept_id) VALUES(#{poName},#{poDeptId})
+		INSERT INTO POSITION (po_name, po_dept_id,po_create_time) VALUES(#{poName},#{poDeptId},#{poCreateTime})
 	</insert>
 	
 	<select id="queryPositionByDept" resultType="Position">
@@ -15,19 +15,47 @@
 			po_dept_id=#{deptId}
 	</select>
 	
+	<select id="queryPositionByPoName" resultType="Position">
+		SELECT
+			*
+		FROM
+			POSITION
+		WHERE
+			po_name=#{name}
+	</select>
+	
+	<delete id="delPosiByPoName">
+		DELETE FROM
+			POSITION
+		WHERE
+			PO_NAME=#{NAME}
+	</delete>
+	
+	<update id="updatePoName">
+		UPDATE
+			POSITION
+		SET
+			PO_NAME=#{1}
+		WHERE
+			PO_ID=#{0}
+	</update>
+	
 	<select id="queryEmployeesByPositionName" resultMap="queryEmployeesByPositionName">
 		SELECT
 			*
 		FROM
-			POSITION p,EMPLOYEE e
+			POSITION p LEFT JOIN EMPLOYEE e 
+		ON
+			p.po_id=e.emp_position_id
 		WHERE
-			p.po_name=#{poName} AND p.po_id=e.emp_position_id
+			p.po_name=#{poName}
 	</select>
 	
 	<resultMap type="Position" id="queryEmployeesByPositionName">
 		<id column="po_id" property="poId"/>
 		<result column="po_name" property="poName"/>
 		<result column="po_dept_id" property="poDeptId"/>
+		<result column="po_create_time" property="poCreateTime"/>
 		<collection property="employees" ofType="Employee">
 			<id column="emp_id" property="empId"/>
 			<result column="emp_name" property="empName"/>

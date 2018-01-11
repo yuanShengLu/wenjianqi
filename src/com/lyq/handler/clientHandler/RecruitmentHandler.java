@@ -106,6 +106,8 @@ public class RecruitmentHandler {
 		model.addAttribute("rec", recList);
 		List<Interview> iList = interviewService.queryInterviewBySupId(sup.getSupId());
 		model.addAttribute("iList", iList);
+		Department dept = departmentService.queryDeptById(sup.getSupDeptId());
+		model.addAttribute("dept", dept);
 		return "supIndex";
 	}
 	

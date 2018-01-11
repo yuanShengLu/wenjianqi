@@ -2,7 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lyq.dao.EmployeeDao">
-	<select id="addEmployee" parameterType="Employee">
-		
+	<insert id="addEmployee" parameterType="Employee">
+		INSERT INTO
+			EMPLOYEE(EMP_ACCOUNT,EMP_PASSWORD,EMP_RESUME_ID,EMP_DEPT_ID,EMP_SUP_ID,EMP_SALARY,EMP_SERVING_TIME,EMP_POSITION_ID,EMP_NAME,EMP_STATUS)
+		VALUES(#{empAccount},#{empPassword},#{empResumeId},#{empDeptId},#{empSupId},#{empSalary},#{empServingTime},#{empPositionId},#{empName},#{empStatus})
+	</insert>
+	
+	<select id="login" parameterType="Employee" resultType="Employee">
+		SELECT
+			*
+		FROM
+			EMPLOYEE
+		WHERE
+			EMP_ACCOUNT=#{empAccount} AND EMP_PASSWORD=#{empPassword}
 	</select>
+	<update id="updateEmpStatus">
+		UPDATE
+			EMPLOYEE
+		SET
+			EMP_STATUS=#{status}
+		WHERE
+			EMP_ID=#{empId}
+	</update>
 </mapper>

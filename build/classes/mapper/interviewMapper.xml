@@ -81,7 +81,14 @@
 		</association>
 	</resultMap>
 	
-	
+	<update id="updateIsAcceptFromSup">
+		UPDATE
+			INTERVIEW
+		SET
+			INTER_ISACCEPT=#{isAccept}
+		WHERE
+			inter_id=#{interId}
+	</update>
 	
 	
 	

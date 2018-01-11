@@ -1,5 +1,6 @@
 package com.lyq.handler.clientHandler;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class DepartmentHandler {
 	public String addDept(String addDept,String addPosition_1,String addPosition_2,String addPosition_3,String addPosition_4,String addPosition_5,String addPosition_6,String addPosition_7) {
 		Department dept = new Department();
 		dept.setDeptName(addDept);
+		dept.setDeptCreateTime(new Date());
 		departmentService.addDept(dept);
 		Department deptReturn = departmentService.queryDeptByName(dept.getDeptName());
 		Integer deptId = deptReturn.getDeptId();
@@ -50,42 +52,49 @@ public class DepartmentHandler {
 			Position position = new Position();
 			position.setPoName(addPosition_1);
 			position.setPoDeptId(deptId);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(addPosition_2!=null&&addPosition_2!="") {
 			Position position = new Position();
 			position.setPoName(addPosition_2);
 			position.setPoDeptId(deptId);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(addPosition_3!=null&&addPosition_3!="") {
 			Position position = new Position();
 			position.setPoName(addPosition_3);
 			position.setPoDeptId(deptId);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(addPosition_4!=null&&addPosition_4!="") {
 			Position position = new Position();
 			position.setPoName(addPosition_4);
 			position.setPoDeptId(deptId);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(addPosition_5!=null&&addPosition_5!="") {
 			Position position = new Position();
 			position.setPoName(addPosition_5);
 			position.setPoDeptId(deptId);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(addPosition_6!=null&&addPosition_6!="") {
 			Position position = new Position();
 			position.setPoName(addPosition_6);
 			position.setPoDeptId(deptId);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(addPosition_7!=null&&addPosition_7!="") {
 			Position position = new Position();
 			position.setPoName(addPosition_7);
 			position.setPoDeptId(deptId);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		return "forward:turnAdminIndex";
@@ -97,36 +106,42 @@ public class DepartmentHandler {
 			Position position = new Position();
 			position.setPoName(positionName_1);
 			position.setPoDeptId(dept);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(positionName_2!=""&&positionName_2!=null) {
 			Position position = new Position();
 			position.setPoName(positionName_2);
 			position.setPoDeptId(dept);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(positionName_3!=""&&positionName_3!=null) {
 			Position position = new Position();
 			position.setPoName(positionName_3);
 			position.setPoDeptId(dept);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(positionName_4!=""&&positionName_4!=null) {
 			Position position = new Position();
 			position.setPoName(positionName_4);
 			position.setPoDeptId(dept);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(positionName_5!=""&&positionName_5!=null) {
 			Position position = new Position();
 			position.setPoName(positionName_5);
 			position.setPoDeptId(dept);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		if(positionName_6!=""&&positionName_6!=null) {
 			Position position = new Position();
 			position.setPoName(positionName_6);
 			position.setPoDeptId(dept);
+			position.setPoCreateTime(new Date());
 			positionService.addPosition(position);
 		}
 		return "forward:turnAdminIndex";
@@ -143,9 +158,63 @@ public class DepartmentHandler {
 	@ResponseBody
 	public String ajaxQueryEmp(String pInfo) {
 		Position position = positionService.queryEmployeesByPositionName(pInfo);
+		if(position.getEmployees().size()==0) {
+			return "0";
+		}
 		List<Employee> eList = position.getEmployees();
 		return JSON.toJSONString(eList);
 	}
+	
+	//TODO 这部分查询员工所有信息包括薪资考勤培训等
+	@RequestMapping("ajaxQueryEmpInfo")
+	@ResponseBody
+	public String ajaxQueryEmpInfo(Integer empId) {
+		return "";
+	}
+	
+	
+	@RequestMapping("ajaxDelPosi")
+	@ResponseBody
+	public String ajaxDelPosi(String poName) {
+		positionService.delPosiByPoName(poName);
+		return "";
+	}
+	
+	@RequestMapping("ajaxUpdatePosi")
+	@ResponseBody
+	public String ajaxUpdatePosi(String updatePosiName,String oldName) {
+		positionService.updatePoName(oldName, updatePosiName);
+		return "";
+	}
+	
+	@RequestMapping("ajaxDelDept")
+	@ResponseBody
+	public String ajaxDelDept(Integer deptId) {
+		int count = departmentService.hasEmployee(deptId);
+		if(count==0) {
+			departmentService.delDept(deptId);
+			return "0";
+		}
+		return count+"";
+	}
+	
+	@RequestMapping("ajaxUpdateDept")
+	@ResponseBody
+	public String ajaxUpdateDept(Integer deptId,String deptNewName) {
+		departmentService.updateDept(deptId, deptNewName);
+		return "";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@RequestMapping("turnAdminIndex")
 	public String turnAdminIndex(String adminAccount,Model model) {
