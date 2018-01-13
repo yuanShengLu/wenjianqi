@@ -1,4 +1,6 @@
 $(function() {
+	
+	$("div[name=changePosi]").hide();
 	$("div[name=addDept]").hide();
 	$("div[name=addPosition]").hide();
 	$("div[name=addPositionToDept]").hide();
@@ -10,6 +12,7 @@ $(function() {
 	})
 	
 	$("img[name=addDept]").click(function() {
+		$("div[name=changePosi]").hide();
 		$("div[name=addPositionToDept]").hide();
 		$("div[name=poDeReUp]").hide();
 		$("div[name=deptInfo]").hide();
@@ -17,6 +20,7 @@ $(function() {
 	})
 	
 	$("img[name=addPosition]").click(function() {
+		$("div[name=changePosi]").hide();
 		$("div[name=addDept]").hide();
 		$("div[name=poDeReUp]").hide();
 		$("div[name=deptInfo]").hide();
@@ -24,6 +28,7 @@ $(function() {
 	})
 	
 	$("img[name=deptInfo]").click(function() {
+		$("div[name=changePosi]").hide();
 		$("div[name=addDept]").hide();
 		$("div[name=poDeReUp]").hide();
 		$("div[name=addPositionToDept]").hide();
@@ -31,11 +36,21 @@ $(function() {
 	})
 	
 	$("img[name=poDeReUp]").click(function() {
+		$("div[name=changePosi]").hide();
 		$("div[name=addDept]").hide();
 		$("div[name=addPositionToDept]").hide();
 		$("div[name=deptInfo]").hide();
 		$("div[name=poDeReUp]").show();
 	})
+	
+	$("img[name=changePosi]").click(function() {
+		$("div[name=addDept]").hide();
+		$("div[name=addPositionToDept]").hide();
+		$("div[name=deptInfo]").hide();
+		$("div[name=poDeReUp]").hide();
+		$("div[name=changePosi]").show();
+	})
+	
 	
 	$(":text[name=addDept]").blur(function() {
 		var info = "确认添加部门？";
@@ -85,6 +100,25 @@ $(function() {
 					$("select[name=posiInfo]").append("<option>-请选择-</option>")
 					$.each(data,function(idx,item){
 						$("select[name=posiInfo]").append("<option>"+item.poName+"</option>")
+					})
+				}
+			})
+		}
+	})
+	
+	$("select[name=deptInfoo]").change(function(){
+		var dInfo = $(this).val();
+		if(dInfo!=0){
+			$.ajax({
+				url:"http://localhost:8080/FinalProject/departmentHandler/ajaxQueryPositionByDeptId",
+				type:"post",
+				data:{dInfo:dInfo},
+				dataType:"json",
+				success:function(data){
+					$("select[name=posiInfoo]").empty();
+					$("select[name=posiInfoo]").append("<option>-请选择-</option>")
+					$.each(data,function(idx,item){
+						$("select[name=posiInfoo]").append("<option>"+item.poName+"</option>")
 					})
 				}
 			})
@@ -149,7 +183,7 @@ $(function() {
 									data:{empId:empId},
 									dataType:"json",
 									success:function(data){
-										$("div[name=deptInfo]").append("<div name='inf'><table border='2 solid' cellpadding='5' cellspacing='0' align='center' style='margin-top: 30px;width:100%'><tr><td><font size='5'>个人信息</font></td></tr><tr name='empInfomation'><td><font>培训信息</font></td></tr><tr><td><button name='return'>返回</button></td></tr></table></div>")
+										$("div[name=deptInfo]").append("<div name='inf'><table border='2 solid' cellpadding='5' cellspacing='0' align='center' style='margin-top: 30px;width:100%'><tr><td colspan='6'><font size='5'>个人信息（上月 单位：天）</font></td></tr><tr name='empInfomation'><td><font>迟到</font></td><td><font>早退</font></td><td><font>旷工</font></td><td><font>绩效奖金</font></td><td><font>罚金</font></td><td><font>共计薪资</font></td></tr><tr><td><font>"+data.lateCount+"</font></td><td><font>"+data.beforeCount+"</font></td><td><font>"+data.disAttend+"</font></td><td><font>"+data.plusMoney+"</font></td><td><font>"+data.lessMoney+"</font></td><td><font>"+data.count+"</font></td></tr><tr><td  colspan='6'><button name='return'>返回</button></td></tr></table></div>")
 										$("button[name=return]").click(function() {
 											$("div[name=inf]").remove();
 											$("div[name=all]").show();
@@ -163,6 +197,117 @@ $(function() {
 			})
 		}
 	})
+	
+	$("select[name=posiInfoo]").change(function(){
+		var pInfo = $(this).val();
+		if(pInfo!="-请选择-"){
+			$.ajax({
+				url:"http://localhost:8080/FinalProject/departmentHandler/ajaxQueryEmp",
+				type:"post",
+				data:{pInfo:pInfo},
+				dataType:"json",
+				success:function(data){
+					if(data==0){
+						$("tr[name=addEmpp]").remove();
+						alert("当前职位暂时没有员工")
+					}else{
+						$("tr[name=addEmpp]").remove();
+						$.each(data,function(idx,item){
+							var oDate = new Date(item.empServingTime);
+							var year = oDate.getFullYear(),
+							oMonth = oDate.getMonth()+1,  
+					        oDay = oDate.getDate(), 
+					        oTime = year+'-'+getzf(oMonth) +'-'+ getzf(oDay);
+							$("tr[name=titlee]").after("<tr name='addEmpp'><td><font>"+item.empId+"</font></td><td><font>"+item.empName+"</font></td><td><font>"+oTime+"</font></td><td><button name='changeP' value='"+item.empId+"'>换岗</button><button name='fire' value='"+item.empId+"'>开除</button></td></tr>");
+							
+							$("button[name=fire]").click(function() {
+								var empId = $(this).val();
+								var reason = "离职:"+prompt("请填写开除原因","");
+								$.ajax({
+									url:"http://localhost:8080/FinalProject/departmentHandler/ajaxFireEmp",
+									type:"post",
+									data:{empId:empId,reason:reason},
+									success:function(data){
+										alert("操作成功")
+									}
+								})
+							})
+							
+							$("button[name=changeP]").click(function() {
+								var empId = $(this).val();
+								$("div[name=alll]").hide();
+								$.ajax({
+									url:"http://localhost:8080/FinalProject/departmentHandler/ajaxQueryEmpInfo",
+									type:"post",
+									data:{empId:empId},
+									dataType:"json",
+									success:function(data){
+										var dFlag = false;
+										var pFlag = false;
+										$("div[name=changePosi]").append("<div name='inff'><table border='2 solid' cellpadding='5' cellspacing='0' align='center' style='margin-top: 30px;width:100%'><tr><td colspan='6'><font size='5'>更换岗位信息</font></td></tr><tr><td colspan='6'><font>部门名字</font><input type='text' name='dName'><font>职位名字</font><input type='text' name='pName'><button name='changeOK' value='"+empId+"'>确定更换</button></td></tr><tr><td  colspan='6'><button name='returnn'>返回</button></td></tr></table></div>")
+										$("button[name=returnn]").click(function() {
+											$("div[name=inff]").remove();
+											$("div[name=alll]").show();
+										})
+										$(":text[name=dName]").blur(function() {
+											var dName = $(this).val();
+											$.ajax({
+												url:"http://localhost:8080/FinalProject/departmentHandler/ajaxHasDept",
+												type:"post",
+												data:{dName:dName},
+												success:function(data){
+													if(data==0){
+														alert("不存在此部门")
+														dFlag = false;
+													}else{
+														dFlag = true;
+													}
+												}
+											})
+										})
+										$(":text[name=pName]").blur(function() {
+											var pName = $(this).val();
+											$.ajax({
+												url:"http://localhost:8080/FinalProject/departmentHandler/ajaxHasPosi",
+												type:"post",
+												data:{pName:pName},
+												success:function(data){
+													if(data==0){
+														alert("不存在此职位")
+														pFlag = false;
+													}else{
+														pFlag = true;
+													}
+												}
+											})
+										})
+										$("button[name=changeOK]").click(function() {
+											var empId = $(this).val();
+											var deptName = $(":text[name=dName]").val();
+											var poName = $(":text[name=pName]").val();
+											if(pFlag&&dFlag){
+												$.ajax({
+													url:"http://localhost:8080/FinalProject/departmentHandler/ajaxChangePosi",
+													type:"post",
+													data:{empId:empId,deptName:deptName,poName:poName},
+													success:function(data){
+														alert("操作成功")
+													}
+												})
+											}else{
+												alert("请核对信息后提交")
+											}
+										})
+									}
+								})
+							})
+						})
+					}
+				}
+			})
+		}
+	})
+	
 	
 	$("select[name=posiInf]").change(function(){
 		$("button[name=delPosi]").unbind("click");

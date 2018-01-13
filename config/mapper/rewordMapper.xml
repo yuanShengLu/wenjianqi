@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyq.dao.RewordDao">
+	<insert id="addReword" parameterType="Reword">
+		INSERT INTO
+			REWARD(REW_TYPE,REW_MONEY,REW_REASON,EMP_ID,REW_MONTH,REW_YEAR)
+		VALUES(#{rewType},#{rewMoney},#{rewReason},#{empId},#{rewMonth},#{rewYear})
+	</insert>
+	
+	<select id="queryReword" resultType="Reword">
+		SELECT
+			*
+		FROM
+			REWARD
+		WHERE
+			EMP_ID=#{0} AND REW_TYPE=#{1} AND REW_YEAR=#{2} AND REW_MONTH=#{3}
+	</select>
+</mapper>

@@ -39,4 +39,10 @@ public interface PositionDao {
 	 * @param updatePoName
 	 */
 	public void updatePoName(Integer poId,String updatePoName);
+	/**
+	 * 根据职位ID查询职位不包括员工信息
+	 * @param poId
+	 * @return
+	 */
+	public Position queryPositionById(Integer poId);
 }

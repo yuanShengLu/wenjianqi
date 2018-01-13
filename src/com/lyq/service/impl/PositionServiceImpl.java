@@ -35,4 +35,8 @@ public class PositionServiceImpl implements PositionService {
 		Integer poId = positionDao.queryPositionByPoName(oldName).getPoId();
 		positionDao.updatePoName(poId, updatePoName);
 	}
+	
+	public Position queryPositionById(Integer poId) {
+		return positionDao.queryPositionById(poId);
+	}
 }

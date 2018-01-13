@@ -40,6 +40,15 @@
 			PO_ID=#{0}
 	</update>
 	
+	<select id="queryPositionById" resultType="Position">
+		SELECT
+			*
+		FROM
+			POSITION
+		WHERE
+			PO_ID=#{ID}
+	</select>
+	
 	<select id="queryEmployeesByPositionName" resultMap="queryEmployeesByPositionName">
 		SELECT
 			*

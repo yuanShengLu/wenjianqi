@@ -1,5 +1,6 @@
 package com.lyq.handler.clientHandler;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,9 +15,12 @@ import com.lyq.entity.Admin;
 import com.lyq.entity.Department;
 import com.lyq.entity.Employee;
 import com.lyq.entity.Position;
+import com.lyq.entity.Salary;
 import com.lyq.service.AdminService;
 import com.lyq.service.DepartmentService;
+import com.lyq.service.EmployeeService;
 import com.lyq.service.PositionService;
+import com.lyq.service.SalaryService;
 @RequestMapping("departmentHandler")
 @Controller
 public class DepartmentHandler {
@@ -26,6 +30,10 @@ public class DepartmentHandler {
 	private PositionService positionService;
 	@Autowired
 	private AdminService adminSevice;
+	@Autowired
+	private SalaryService salaryService;
+	@Autowired
+	private EmployeeService employeeService;
 	
 	@RequestMapping(value="ajaxQueryPosition",produces="text/html;charset=UTF-8")
 	@ResponseBody
@@ -169,7 +177,17 @@ public class DepartmentHandler {
 	@RequestMapping("ajaxQueryEmpInfo")
 	@ResponseBody
 	public String ajaxQueryEmpInfo(Integer empId) {
-		return "";
+		Date date = new Date();
+		int year = date.getYear()+1900;
+		int month = date.getMonth()+1;
+		if(month==1) {
+			year = year-1;
+			month = 12;
+		}else {
+			month = month-1;
+		}
+		Salary salary = salaryService.querySalary(empId, year, month);
+		return JSON.toJSONString(salary);
 	}
 	
 	
@@ -206,7 +224,44 @@ public class DepartmentHandler {
 	}
 	
 	
+	@RequestMapping("ajaxHasDept")
+	@ResponseBody
+	public String ajaxHasDept(String dName) {
+		Department d = departmentService.queryDeptByName(dName);
+		if(d==null) {
+			return "0";
+		}
+		return "1";
+	}
 	
+	
+	@RequestMapping("ajaxHasPosi")
+	@ResponseBody
+	public String ajaxHasPosi(String pName) {
+		Position p = positionService.queryPositionByPoName(pName);
+		if(p==null) {
+			return "0";
+		}
+		return "1";
+	}
+	
+	@RequestMapping("ajaxChangePosi")
+	@ResponseBody
+	public String ajaxChangePosi(Integer empId,String deptName,String poName) {
+		Integer poId = positionService.queryPositionByPoName(poName).getPoId();
+		Integer deptId = departmentService.queryDeptByName(deptName).getDeptId();
+		Integer supId = departmentService.queryDeptByName(deptName).getDeptSupId();
+		employeeService.updateEmpDeptAndPosi(empId, deptId, poId, supId);
+		return "";
+	}
+	
+	
+	@RequestMapping("ajaxFireEmp")
+	@ResponseBody
+	public String ajaxFireEmp(Integer empId,String reason) {
+		employeeService.updateEmpStatus(reason, empId);
+		return "";
+	}
 	
 	
 	

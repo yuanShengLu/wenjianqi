@@ -24,6 +24,15 @@
 			resume_id=#{resumeId}
 	</update>
 	
+	<update id="updateEmpResume" parameterType="Resume">
+		UPDATE
+			RESUME
+		SET
+			real_name=#{realName},age=#{age},contact_info=#{contactInfo},gender=#{gender},education=#{education},e_mail=#{eMail},political_status=#{politicalStatus},hobby=#{hobby}
+		WHERE
+			resume_id=#{resumeId}
+	</update>
+	
 	<update id="updateRecId">
 		UPDATE
 			RESUME

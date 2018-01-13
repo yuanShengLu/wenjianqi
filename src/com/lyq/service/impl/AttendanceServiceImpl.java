@@ -1,5 +1,8 @@
 package com.lyq.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +18,12 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public void addAttendance(Attendance att) {
 		attendanceDao.addAttendance(att);
 	}
-
+	
+	public Date queryMaxAttTime(Integer empId,Integer attType) {
+		return attendanceDao.queryMaxAttTime(empId, attType);
+	}
+	
+	public List<Attendance> queryAttendance(Integer empId,Integer attYear,Integer attMonth,Integer attStatus){
+		return attendanceDao.queryAttendance(empId, attYear, attMonth, attStatus);
+	}
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyq.dao.TrainDao">
+	<insert id="addTrain" parameterType="Train">
+		INSERT INTO
+			TRAIN(T_INFO,DEPT_ID,T_START_TIME,T_END_TIME)
+		VALUES(#{tInfo},#{deptId},#{tStartTime},#{tEndTime})
+	</insert>
+	<select id="queryTrain" resultType="Train">
+		SELECT
+			*
+		FROM
+			TRAIN
+		WHERE
+			DEPT_ID=#{1} AND T_END_TIME>#{0}
+	</select>
+	<update id="updateTrain" parameterType="Train">
+		UPDATE
+			TRAIN
+		SET
+			T_INFO=#{tInfo},t_start_time=#{tStartTime},t_end_time=#{tEndTime}
+	</update>
+	<delete id="delTrain">
+		DELETE FROM
+			TRAIN
+		WHERE
+			T_ID=#{ID}
+	</delete>
+</mapper>

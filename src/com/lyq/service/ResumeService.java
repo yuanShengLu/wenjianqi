@@ -17,4 +17,5 @@ public interface ResumeService {
 	public void updateResume(Resume resume);
 	public void updateRecId(Integer resumeId,Integer recId,Integer resumeIsRead);
 	public Resume queryResumeByResumeId(Integer rsumeId);
+	public void updateEmpResume(Resume resume);
 }

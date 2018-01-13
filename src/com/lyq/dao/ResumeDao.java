@@ -19,6 +19,11 @@ public interface ResumeDao {
 	 */
 	public void updateResume(Resume resume);
 	/**
+	 * 员工更新自己的基本信息
+	 * @param resume
+	 */
+	public void updateEmpResume(Resume resume);
+	/**
 	 * 投递简历修改简历中招聘信息ID和状态
 	 * @param resumeId
 	 * @param recId

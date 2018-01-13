@@ -14,17 +14,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyq.entity.Department;
+import com.lyq.entity.Employee;
 import com.lyq.entity.Interview;
 import com.lyq.entity.Position;
 import com.lyq.entity.Recruitment;
+import com.lyq.entity.Suggest;
 import com.lyq.entity.Supervisor;
+import com.lyq.entity.Train;
 import com.lyq.entity.User;
 import com.lyq.service.DepartmentService;
+import com.lyq.service.EmployeeService;
 import com.lyq.service.InterviewService;
 import com.lyq.service.PositionService;
 import com.lyq.service.RecruitmentService;
 import com.lyq.service.ResumeService;
+import com.lyq.service.SuggestService;
 import com.lyq.service.SupervisorService;
+import com.lyq.service.TrainService;
 import com.lyq.service.UserService;
 @RequestMapping("recruitmentHandler")
 @Controller
@@ -43,6 +49,12 @@ public class RecruitmentHandler {
 	private InterviewService interviewService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private EmployeeService employeeService;
+	@Autowired
+	private SuggestService suggestService;
+	@Autowired
+	private TrainService trainService;
 	
 	@RequestMapping("createRecru")
 	public String createRecru(Recruitment recru,Integer supDeptId,Integer supId) {
@@ -108,6 +120,16 @@ public class RecruitmentHandler {
 		model.addAttribute("iList", iList);
 		Department dept = departmentService.queryDeptById(sup.getSupDeptId());
 		model.addAttribute("dept", dept);
+		Employee employee = new Employee();
+		employee.setEmpAccount(sup.getSupAccount());
+		employee.setEmpPassword(sup.getSupPassword());
+		employee = employeeService.login(employee);//管理员同时存在员工表和管理员表
+		model.addAttribute("empId",employee.getEmpId());
+		List<Suggest> sugList = suggestService.readSuggest(sup.getSupId());
+		model.addAttribute("sugList", sugList);
+		String dateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		List<Train> trainList = trainService.queryTrain(dateString, sup.getSupDeptId());
+		model.addAttribute("trainList", trainList);
 		return "supIndex";
 	}
 	

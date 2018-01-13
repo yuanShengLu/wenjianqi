@@ -22,12 +22,18 @@
 		<c:if test="${iList.size()!=0}">
 			<font>您有${iList.size()}个面试需要参加审核！</font>
 		</c:if>
+		<c:if test="${sugList.size()!=0}">
+			<font>您有${sugList.size()}条员工反馈未阅读！</font>
+		</c:if>
 			
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/createRecruitment.png" name="createRecruitment"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/checkintvinfo.png" name="readResumes"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/intvevent.png" name="interview"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/deptInfo.png" name="deptInfo"><br/>
-		<img class="navigation" src="${pageContext.request.contextPath }/imgs/button.png" name=""><br/>
+		<img class="navigation" src="${pageContext.request.contextPath }/imgs/tianjiajiangcheng.png" name="addReword"><br/>
+		<img class="navigation" src="${pageContext.request.contextPath }/imgs/gongzifafang.png" name="releaseSalary"><br/>
+		<img class="navigation" src="${pageContext.request.contextPath }/imgs/fabupeixun.png" name="releaseTrain"><br/>
+		<img class="navigation" src="${pageContext.request.contextPath }/imgs/button.png" name="suggest"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/tuichu.png" name="back"><br/>
 	</div>
 	<div class="right">
@@ -35,6 +41,8 @@
 		<font size="5" style="position: absolute;right:40px;top:300px">上班</font>
 		<img src="${pageContext.request.contextPath }/imgs/shangban.png" name="happy" style="right:0;top:400px;width: 100px;height: 100px;position: absolute;">
 		<font size="5" style="position: absolute;right:40px;top:500px">下班</font>
+		<input type="hidden" name="empId" value="${empId }">
+		<input type="hidden" name="deptId" value="${sup.supDeptId}">
 		
 		<!-- 发布招聘信息 -->
 		<div class="info" name="createRecruitment">
@@ -214,12 +222,99 @@
 					<td><font>详细信息</font></td>
 				</tr>
 			</table>
+			</div>
 		</div>
 	
+		<!-- 添加奖惩 -->
+		<div class="info" name="addReword">
+			<table border="2 solid" cellpadding="5" cellspacing="0" align="center" style="margin-top: 30px;width:100%">
+				<tr><td><font size="5">添加奖惩</font></td></tr>
+				<tr>
+					<td>
+						<font>请选择奖惩</font>
+						<select name="rewType">
+							<option value="1">奖励</option>
+							<option value="0">惩罚</option>
+						</select>
+						<font>请填写员工ID</font>
+						<input type="text" name="empId">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<font>金额</font><input type="text" name="rewMoney">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<font>奖惩原因</font><input type="text" name="rewReason">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button name="commitRew">确认添加</button>
+					</td>
+				</tr>
+			</table>
+		</div>
 	
-	
-	
-	
+		<div class="info" name="suggest">
+			<table border="2 solid" cellpadding="5" cellspacing="0" align="center" style="margin-top: 30px;width:100%">
+				<tr><td colspan="2"><font size="5">员工反馈</font></td></tr>
+				<tr>
+					<td><font>员工ID</font></td>
+					<td><font>意见内容</font></td>
+				</tr>
+				<c:forEach items="${sugList }" var="sug">
+					<tr>
+						<td><font>${sug.empId }</font></td>
+						<td><font>${sug.suggestInfo }</font></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+		
+		<!-- 发布培训 -->
+		<div class="info" name="releaseTrain">
+			<table border="2 solid" cellpadding="5" cellspacing="0" align="center" style="margin-top: 30px;width:100%">
+				<tr><td colspan="2"><font size="5">新建部门培训</font></td></tr>
+				<tr>
+					<td><font>开始时间</font></td>
+					<td><font>结束时间</font></td>
+				</tr>
+				<tr>
+					<td><input type="date" name="tStartTime"></td>
+					<td><input type="date" name="tEndTime"></td>
+				</tr>
+				<tr>
+					<td><font>培训内容</font></td>
+					<td><input type="text" name="tInfo"></td>
+				</tr>
+				<tr><td colspan="3"><button name="addTrain" value="${sup.supDeptId }">确认发布</button></td></tr>
+				<tr><td colspan="2"><font size="5">修改已有部门培训</font></td></tr>
+				<c:forEach items="${trainList }" var="t">
+					<tr>
+						<td><font>开始时间</font></td>
+						<td><font>结束时间</font></td>
+					</tr>
+					<tr>
+						<td><input type="text" name="tStartTimeOld${t.tId }" value="<f:formatDate value="${t.tStartTime }" pattern="yyyy-MM-dd"/>" readonly="readonly"></td>
+						<td><font><input type="text" name="tEndTimeOld${t.tId }" value="<f:formatDate value="${t.tEndTime }" pattern="yyyy-MM-dd"/>" readonly="readonly"></font></td>
+					</tr>
+					<tr>
+						<td><font>改为</font></td>
+						<td><font>改为</font></td>
+					</tr>
+					<tr>
+						<td><input type="date" name="tStartTimeNew${t.tId }"></td>
+						<td><input type="date" name="tEndTimeNew${t.tId }"></td>
+					</tr>
+					<tr><td colspan="2"><font>培训内容</font><input type="text" name="tInfoNew${t.tId }" value="${t.tInfo}"></td></tr>
+					<tr><td colspan="2"><button name="trainUpdate" value="${t.tId }">修改</button>&nbsp;&nbsp;&nbsp;<button name="trainRemove" value="${t.tId }">删除</button></td></tr>
+				</c:forEach>
+			</table>
+			
+		</div>
 	
 	
 	

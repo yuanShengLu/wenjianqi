@@ -1,4 +1,10 @@
 $(function() {
+	var empId = $(":hidden[name=empId]").val();
+	var deptId = $(":hidden[name=deptId]").val();
+	
+	$("div[name=releaseTrain]").hide();
+	$("div[name=suggest]").hide();
+	$("div[name=addReword]").hide();
 	$("div[name=createRecruitment]").hide();
 	$("div[name=readResumes]").hide();
 	$("tr[name=interviewDate]").hide();
@@ -13,31 +19,73 @@ $(function() {
 	})
 	
 	$("img[name=createRecruitment]").click(function() {
+		$("div[name=releaseTrain]").hide();
+		$("div[name=suggest]").hide();
 		$("div[name=interview]").hide();
 		$("div[name=readResumes]").hide();
+		$("div[name=addReword]").hide();
 		$("div[name=deptInfo]").hide();
 		$("div[name=createRecruitment]").show();
 	})
 	
 	$("img[name=readResumes]").click(function() {
+		$("div[name=releaseTrain]").hide();
+		$("div[name=suggest]").hide();
 		$("div[name=interview]").hide();
+		$("div[name=addReword]").hide();
 		$("div[name=createRecruitment]").hide();
 		$("div[name=deptInfo]").hide();
 		$("div[name=readResumes]").show();
 	})
 	
 	$("img[name=interview]").click(function() {
+		$("div[name=releaseTrain]").hide();
+		$("div[name=suggest]").hide();
 		$("div[name=createRecruitment]").hide();
 		$("div[name=deptInfo]").hide();
+		$("div[name=addReword]").hide();
 		$("div[name=readResumes]").hide();
 		$("div[name=interview]").show();
 	})
 	
 	$("img[name=deptInfo]").click(function() {
+		$("div[name=releaseTrain]").hide();
+		$("div[name=suggest]").hide();
+		$("div[name=createRecruitment]").hide();
+		$("div[name=readResumes]").hide();
+		$("div[name=addReword]").hide();
+		$("div[name=interview]").hide();
+		$("div[name=deptInfo]").show();
+	})
+	
+	$("img[name=addReword]").click(function() {
+		$("div[name=releaseTrain]").hide();
+		$("div[name=suggest]").hide();
 		$("div[name=createRecruitment]").hide();
 		$("div[name=readResumes]").hide();
 		$("div[name=interview]").hide();
-		$("div[name=deptInfo]").show();
+		$("div[name=deptInfo]").hide();
+		$("div[name=addReword]").show();
+	})
+	
+	$("img[name=suggest]").click(function() {
+		$("div[name=releaseTrain]").hide();
+		$("div[name=createRecruitment]").hide();
+		$("div[name=readResumes]").hide();
+		$("div[name=interview]").hide();
+		$("div[name=deptInfo]").hide();
+		$("div[name=addReword]").hide();
+		$("div[name=suggest]").show();
+	})
+	
+	$("img[name=releaseTrain]").click(function() {
+		$("div[name=createRecruitment]").hide();
+		$("div[name=readResumes]").hide();
+		$("div[name=interview]").hide();
+		$("div[name=deptInfo]").hide();
+		$("div[name=addReword]").hide();
+		$("div[name=suggest]").hide();
+		$("div[name=releaseTrain]").show();
 	})
 	
 	$(":submit[name=recConfirm]").click(function() {
@@ -179,7 +227,7 @@ $(function() {
 									data:{empId:empId},
 									dataType:"json",
 									success:function(data){
-										$("div[name=deptInfo]").append("<div name='inf'><table border='2 solid' cellpadding='5' cellspacing='0' align='center' style='margin-top: 30px;width:100%'><tr><td><font size='5'>个人信息</font></td></tr><tr name='empInfomation'><td><font>培训信息</font></td></tr><tr><td><button name='return'>返回</button></td></tr></table></div>")
+										$("div[name=deptInfo]").append("<div name='inf'><table border='2 solid' cellpadding='5' cellspacing='0' align='center' style='margin-top: 30px;width:100%'><tr><td colspan='6'><font size='5'>个人信息（上月 单位：天）</font></td></tr><tr name='empInfomation'><td><font>迟到</font></td><td><font>早退</font></td><td><font>旷工</font></td><td><font>绩效奖金</font></td><td><font>罚金</font></td><td><font>共计薪资</font></td></tr><tr><td><font>"+data.lateCount+"</font></td><td><font>"+data.beforeCount+"</font></td><td><font>"+data.disAttend+"</font></td><td><font>"+data.plusMoney+"</font></td><td><font>"+data.lessMoney+"</font></td><td><font>"+data.count+"</font></td></tr><tr><td  colspan='6'><button name='return'>返回</button></td></tr></table></div>")
 										$("button[name=return]").click(function() {
 											$("div[name=inf]").remove();
 											$("div[name=all]").show();
@@ -193,6 +241,162 @@ $(function() {
 			})
 		}
 	})
+	
+	$("img[name=sad]").click(function() {
+		$.ajax({
+			url:"http://localhost:8080/FinalProject/employeeHandler/ajaxAttend",
+			type:"post",
+			data:{empId:empId},
+			success:function(data){
+				if(data==1){
+					alert("正常上班")
+				}
+				if(data==2){
+					alert("你迟到啦")
+				}
+				if(data==4){
+					alert("加班开始")
+				}
+				if(data==0){
+					alert("请勿重复打卡")
+				}
+			}
+		})
+	})
+	
+	$("img[name=happy]").click(function() {
+		$.ajax({
+			url:"http://localhost:8080/FinalProject/employeeHandler/ajaxLeave",
+			type:"post",
+			data:{empId:empId},
+			success:function(data){
+				if(data==1){
+					alert("正常下班")
+				}
+				if(data==3){
+					alert("早退")
+				}
+				if(data==5){
+					alert("加班结束")
+				}
+				if(data==0){
+					alert("请勿重复打卡")
+				}
+			}
+		})
+	})
+	
+	var flagRewMoney = false;
+	var flagEmpId = false;
+	
+	$(":text[name=rewMoney]").blur(function() {
+		var rewMoney = $(this).val();
+		var regx = /^[0-9]+$/;
+		if(!regx.test(rewMoney)){
+			alert("请填写正确的金额")
+			flagRewMoney = false;
+		}else{
+			flagRewMoney = true;
+		}
+	})
+	
+	$(":text[name=empId]").blur(function() {
+		var empId = $(this).val();
+		var regx = /^[0-9]+$/;
+		if(!regx.test(empId)){
+			alert("员工ID不合法")
+			flagEmpId = false;
+		}else{
+			flagEmpId = true;
+		}
+	})
+	
+	$("button[name=commitRew]").click(function() {
+		if(flagRewMoney&&flagEmpId){
+			var rewType = $("select[name=rewType]").val();
+			var rewMoney = $(":text[name=rewMoney]").val();
+			var empId = $(":text[name=empId]").val();
+			var rewReason = $(":text[name=rewReason]").val();
+			$.ajax({
+				url:"http://localhost:8080/FinalProject/employeeHandler/ajaxAddReward",
+				type:"post",
+				data:{rewMoney:rewMoney,empId:empId,rewReason:rewReason,rewType:rewType},
+				success:function(data){
+					alert("操作成功")
+				}
+			})
+		}else{
+			alert("请核对信息后再提交")
+		}
+	})
+	
+	$("img[name=releaseSalary]").click(function() {
+		$.ajax({
+			url:"http://localhost:8080/FinalProject/employeeHandler/ajaxReleaseSalary",
+			type:"post",
+			data:{deptId:deptId},
+			success:function(data){
+				if(data==0){
+					alert("请于每月一号结算工资")
+				}else{
+					alert("发放成功")
+				}
+			}
+		})
+	})
+	
+	
+	$("button[name=addTrain]").click(function() {
+		var deptId = $(this).val();
+		var tInfo = $(":text[name=tInfo]").val();
+		var tStartTime = $("input[name=tStartTime]").val();
+		var tEndTime = $("input[name=tEndTime]").val();
+		
+		$.ajax({
+			url:"http://localhost:8080/FinalProject/employeeHandler/ajaxAddTrain",
+			type:"post",
+			data:{deptId:deptId,tInfo:tInfo,tStartTime:tStartTime,tEndTime:tEndTime},
+			success:function(data){
+				alert("发布成功")
+			}
+		})
+	})
+	
+	$("button[name=trainUpdate]").click(function() {
+		var tId = $(this).val();
+		var tStartTime = $("input[name=tStartTimeNew"+tId+"]").val();
+		var tEndTime = $("input[name=tEndTimeNew"+tId+"]").val();
+		if(tStartTime==""){
+			tStartTime = $("input[name=tStartTimeOld"+tId+"]").val();
+		}
+		if(tEndTime==""){
+			tEndTime = $("input[name=tEndTimeOld"+tId+"]").val();
+		}
+		var tInfo = $(":text[name=tInfoNew"+tId+"]").val();
+		$.ajax({
+			url:"http://localhost:8080/FinalProject/employeeHandler/ajaxUpdateTrain",
+			type:"post",
+			data:{tId:tId,tInfo:tInfo,tStartTime:tStartTime,tEndTime:tEndTime},
+			success:function(data){
+				alert("修改成功")
+			}
+		})
+	})
+
+	$("button[name=trainRemove]").click(function() {
+		var tId = $(this).val();
+		$.ajax({
+			url:"http://localhost:8080/FinalProject/employeeHandler/ajaxDelTrain",
+			type:"post",
+			data:{tId:tId},
+			success:function(data){
+				alert("删除成功")
+			}
+		})
+	})
+	
+	
+	
 	
 	
 	

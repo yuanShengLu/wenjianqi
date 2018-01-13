@@ -2,6 +2,7 @@ package com.lyq.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 public class App {
 	/**
@@ -29,6 +30,54 @@ public class App {
 		}
 		return buffer.toString();
 	}
+	
+	/**
+	 * 返回考勤信息
+	 * @param date
+	 * @return  1：正常 2：迟到 3:早退 4:加班开始 5：加班结束
+	 */
+	public static int work(Date date,int attType) {
+		int hour = date.getHours();
+		if(attType==0) {
+			if(hour<9&&hour>5) {
+				return 1;
+			}
+			if(hour>8&&hour<17) {
+				return 2;
+			}
+			return 4;
+		}
+		if(attType==1) {
+			if(hour<17&&hour>8) {
+				return 3;
+			}
+			if(hour>16&&hour<19) {
+				return 1;
+			}
+			return 5;
+		}
+		return 0;//不存在的值
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 

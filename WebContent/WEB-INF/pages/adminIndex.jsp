@@ -19,7 +19,7 @@
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/addPosition.png" name="addPosition"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/deptInfo.png" name="deptInfo"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/deptUpdateAndDel.png" name="poDeReUp"><br/>
-		<img class="navigation" src="${pageContext.request.contextPath }/imgs/renshidiaodong.png" name="empChangePosi"><br/>
+		<img class="navigation" src="${pageContext.request.contextPath }/imgs/renshidiaodong.png" name="changePosi"><br/>
 		<img class="navigation" src="${pageContext.request.contextPath }/imgs/tuichu.png" name="back"><br/>
 	</div>
 	
@@ -90,21 +90,6 @@
 			</table>
 			</div>
 			
-			
-			<!-- 这部分放到JQ中 -->
-			<!--<div name="inf">-->
-				<!--基本信息、薪资、培训、绩效、部门、职位、考勤 -->
-			<!--	<table border="2 solid" cellpadding="5" cellspacing="0" align="center" style="margin-top: 30px;width:90%">
-					<tr><td><font size="5">个人信息</font></td></tr>
-					<tr name="empInfomation">
-						<td>
-							<font>培训信息</font>
-						</td>
-					</tr>
-					<tr><td><button name="return">返回</button></td></tr>
-				</table>
-			</div>-->
-			
 		</div>
 		
 		<!-- 部门职位的删除修改 -->
@@ -151,6 +136,43 @@
 			</table>
 		
 		</div>
+		
+		<!-- 人事调动 -->
+		<div class="info" name="changePosi">
+			<div name="alll">
+			<font size="5">部门</font>
+			<select name="deptInfoo">
+				<option value="0">-请选择-</option>
+				<c:forEach items="${dList}" var="dept">
+						<option value="${dept.deptId }">${dept.deptName }</option>
+				</c:forEach>
+			</select>
+			<font size="5">职位</font>
+			<select name="posiInfoo">
+				<option>-请选择-</option>
+			</select>
+			
+			<table border="2 solid" cellpadding="5" cellspacing="0" align="center" style="margin-top: 30px;width:100%">
+				<tr><td colspan="6"><b><font>员工信息</font></b></td></tr>
+				<tr name="titlee">
+					<td><font>ID</font></td>
+					<td><font>姓名</font></td>
+					<td><font>入职时间</font></td>
+					<td><font>人事变动</font></td>
+				</tr>
+			</table>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 				
 		

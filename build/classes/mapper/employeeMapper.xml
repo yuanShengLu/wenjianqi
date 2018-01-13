@@ -24,4 +24,22 @@
 		WHERE
 			EMP_ID=#{empId}
 	</update>
+	
+	<select id="queryEmpByDeptId" resultType="Employee">
+		SELECT
+			*
+		FROM
+			EMPLOYEE
+		WHERE
+			EMP_DEPT_ID=#{ID}
+	</select>
+	
+	<update id="updateEmpDeptAndPosi">
+		UPDATE
+			EMPLOYEE
+		SET
+			EMP_DEPT_ID=#{1},EMP_POSITION_ID=#{2},EMP_SUP_ID=#{3}
+		WHERE
+			EMP_ID=#{0}
+	</update>
 </mapper>

@@ -8,6 +8,21 @@ public class Attendance {
 	private Date attTime;
 	private int attType;
 	private int attStatus;
+	private int attYear;
+	private int attMonth;
+	
+	public int getAttYear() {
+		return attYear;
+	}
+	public void setAttYear(int attYear) {
+		this.attYear = attYear;
+	}
+	public int getAttMonth() {
+		return attMonth;
+	}
+	public void setAttMonth(int attMonth) {
+		this.attMonth = attMonth;
+	}
 	public int getAttId() {
 		return attId;
 	}

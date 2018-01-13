@@ -11,4 +11,5 @@ public interface PositionService {
 	public Position queryPositionByPoName(String posiName);
 	public void delPosiByPoName(String posiName);
 	public void updatePoName(String oldName,String updatePoName);
+	public Position queryPositionById(Integer poId);
 }

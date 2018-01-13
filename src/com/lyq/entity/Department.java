@@ -9,9 +9,16 @@ public class Department {
 	private Date deptCreateTime;
 	private List<Position> pList;
 	private Supervisor supervisor;
+	private int deptSupId;
 	private List<Employee> employees;
 	
 	
+	public int getDeptSupId() {
+		return deptSupId;
+	}
+	public void setDeptSupId(int deptSupId) {
+		this.deptSupId = deptSupId;
+	}
 	public Date getDeptCreateTime() {
 		return deptCreateTime;
 	}

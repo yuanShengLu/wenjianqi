@@ -1,5 +1,6 @@
 @charset "UTF-8";
 body {
+	background-attachment:fixed;
 	background-image: url("http://localhost:8080/FinalProject/imgs/empIndex.jpg");
 	background-size: 100%;
 }
@@ -15,7 +16,6 @@ body {
 .navigation{
 	width: 130px;
 	height: 100px;
-	
 }
 font{
 	color: orange;

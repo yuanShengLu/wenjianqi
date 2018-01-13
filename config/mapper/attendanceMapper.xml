@@ -4,7 +4,25 @@
 <mapper namespace="com.lyq.dao.AttendanceDao">
 	<insert id="addAttendance" parameterType="Attendance">
 		INSERT INTO
-			ATTENDANCE(EMP_ID,ATT_TIME,ATT_TYPE,ATT_STATUS)
-		VALUES(#{empId},#{attTime},#{attType},#{attStatus})
+			ATTENDANCE(EMP_ID,ATT_TIME,ATT_TYPE,ATT_STATUS,ATT_YEAR,ATT_MONTH)
+		VALUES(#{empId},#{attTime},#{attType},#{attStatus},#{attYear},#{attMonth})
 	</insert>
+	
+	<select id="queryMaxAttTime" resultType="Date">
+		SELECT
+			MAX(att_time)
+		FROM 
+			attendance 
+		WHERE 
+			emp_id=#{0} AND att_type=#{1}
+	</select>
+	
+	<select id="queryAttendance" resultType="Attendance">
+		SELECT
+			*
+		FROM
+			ATTENDANCE
+		WHERE
+			EMP_ID=#{0} AND ATT_YEAR=#{1} AND ATT_MONTH=#{2} AND ATT_STATUS=#{3}
+	</select>
 </mapper>
